@@ -159,7 +159,38 @@
 <p>总结：正面图片–（生成后视图）–（生成mesh和texture）–重建出3d模型</p>
 <p>引入新的评估基准？</p>
 <p><img src="/.com//1_MyBlog\Hexo\source\imgs\SiTH%20flow%20chart.png" alt="SiTH flow chart"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    img[Input Images]--&gt;enc[Image Encoder]</span><br><span class="line">    img--&gt;|Human Pose Estimation| mesh  </span><br><span class="line">    VAE--&gt;|Horizonal Clip| FBI[Front-Back Images]  </span><br><span class="line">    SM--&gt;outMesh[output 3d mesh]</span><br><span class="line">    RM--&gt;ourTex[output texture]</span><br><span class="line">    FBI--&gt;NP[Normal predictor]</span><br><span class="line">    FBI--&gt;FBI2[Front-Back Images]</span><br><span class="line"></span><br><span class="line">x[query point]--&gt;|Feature Querying|FBI</span><br><span class="line">    x[query point]--&gt;|Feature Querying|NT</span><br><span class="line">    x[query point]--&gt;|Feature Querying|FBI2</span><br><span class="line"></span><br><span class="line">  subgraph Back-View Halluciation </span><br><span class="line">    enc--&gt;difus[Diffusion U-Net]</span><br><span class="line">    noise[noise]--&gt;difus</span><br><span class="line">    difus--&gt;VAE[VAE Decoder]   </span><br><span class="line">    mesh[Mesh]--&gt;|Render| UM[Back-view Uv/Mask]</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  subgraph Mesh Reconstruction </span><br><span class="line">    NP--&gt;NT[Normal texture]</span><br><span class="line">    NT--&gt;SM[SDF MLP]    </span><br><span class="line">    FBI2--&gt;RM[RGB MLP]</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  classDef highlight fill:#7D2CD9,stroke:#000,stroke-width:2px;  </span><br><span class="line">  class UM,enc,noise,difus,VAE highlight;  </span><br><span class="line"></span><br><span class="line">  classDef highlight2 fill:#3383ff,stroke:#001,stroke-width:2px;  </span><br><span class="line">  class NP,NT,FBI2,SM,RM highlight2;</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">flowchart TD
+    img[Input Images]-->enc[Image Encoder]
+    img-->|Human Pose Estimation| mesh  
+    VAE-->|Horizonal Clip| FBI[Front-Back Images]  
+    SM-->outMesh[output 3d mesh]
+    RM-->ourTex[output texture]
+    FBI-->NP[Normal predictor]
+    FBI-->FBI2[Front-Back Images]
+
+x[query point]-->|Feature Querying|FBI
+    x[query point]-->|Feature Querying|NT
+    x[query point]-->|Feature Querying|FBI2
+
+  subgraph Back-View Halluciation 
+    enc-->difus[Diffusion U-Net]
+    noise[noise]-->difus
+    difus-->VAE[VAE Decoder]   
+    mesh[Mesh]-->|Render| UM[Back-view Uv/Mask]
+  end
+
+  subgraph Mesh Reconstruction 
+    NP-->NT[Normal texture]
+    NT-->SM[SDF MLP]    
+    FBI2-->RM[RGB MLP]
+  end
+
+
+  classDef highlight fill:#7D2CD9,stroke:#000,stroke-width:2px;  
+  class UM,enc,noise,difus,VAE highlight;  
+
+  classDef highlight2 fill:#3383ff,stroke:#001,stroke-width:2px;  
+  class NP,NT,FBI2,SM,RM highlight2;</pre>
 
 <hr>
 <blockquote>
