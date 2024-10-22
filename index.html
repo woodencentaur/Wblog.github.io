@@ -159,7 +159,11 @@
 <p>总结：正面图片–（生成后视图）–（生成mesh和texture）–重建出3d模型</p>
 <p>引入新的评估基准？</p>
 <p><img src="/.com//1_MyBlog\Hexo\source\imgs\SiTH%20flow%20chart.png" alt="SiTH flow chart"></p>
-<pre class="mermaid">flowchart TD;
+<pre class="mermaid">graph LR
+    A[开始] --> B[中间步骤]
+    B --> C[结束]
+
+flowchart TD;
     img[Input Images]-->enc[Image Encoder];
     img-->|Human Pose Estimation| mesh;
     VAE-->|Horizonal Clip| FBI[Front-Back Images];  
