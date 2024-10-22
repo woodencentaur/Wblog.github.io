@@ -136,17 +136,13 @@
 </blockquote>
 <p>总结：正面图片–（生成后视图）–（生成mesh和texture）–重建出3d模型</p>
 <p>引入新的评估基准？</p>
-<p><img src="/.com//1_MyBlog\Hexo\source\imgs\SiTH%20flow%20chart.png" alt="SiTH flow chart"></p>
-<pre class="mermaid">graph LR
-    A[开始] --> B[中间步骤]
-    B --> C[结束]
-
-flowchart TD;
+<p><img src="/.com//1_MyBlog\Hexo\source\img\SiTH_flow_chart.png" alt="SiTH_flow_chart"></p>
+<pre class="mermaid">flowchart TD;    
     img[Input Images]-->enc[Image Encoder];
     img-->|Human Pose Estimation| mesh;
     VAE-->|Horizonal Clip| FBI[Front-Back Images];  
     SM-->outMesh[output 3d mesh];
-    RM-->ourTex[output texture];
+    RM-->outTex[output texture];
     FBI-->NP[Normal predictor];
     FBI-->FBI2[Front-Back Images];
 
@@ -167,12 +163,16 @@ flowchart TD;
     FBI2-->RM[RGB MLP];
   end
 
+  linkStyle default stroke:#8FBC8F,stroke-width:2px;
 
   classDef highlight fill:#7D2CD9,stroke:#000,stroke-width:2px;  
   class UM,enc,noise,difus,VAE highlight;  
 
   classDef highlight2 fill:#3383ff,stroke:#001,stroke-width:2px;  
-  class NP,NT,FBI2,SM,RM highlight2;</pre>
+  class NP,NT,FBI2,SM,RM highlight2;
+
+  classDef highlight3 fill:#008B00,stroke:#000,stroke-width:2px;  
+  class img,mesh,FBI,x,outMesh,outTex highlight3;</pre>
 
 <hr>
 <blockquote>
